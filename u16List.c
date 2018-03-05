@@ -1,5 +1,6 @@
 // Sorted list with specified max length.
 // Stores the largest MAXLEN number of values.
+
 #include "stdlib.h"
 #include "u16List.h"
 
@@ -87,7 +88,15 @@ void sortValue(uint16 val)
             #ifdef U16LIST_DBG
             printf("curr_p 0x%x, next_p 0x%x\n", (uint32)curr_p, (uint32)next_p);
             #endif
-            curr_p->next = node;
+            if(curr_p == NULL) // insert at head
+            {
+                node->next = head;
+                head = node;
+            }
+            else
+            {
+                curr_p->next = node;
+            }
             node->next = next_p;
             fixListLen();
         }
@@ -166,7 +175,10 @@ boolean deleteNode(u16Node **prev_pp, u16Node **curr_pp)
     {
         head = (*curr_pp)->next;
         #ifdef U16LIST_DBG
-        printf("deleteNode - Reset head val %d\n", head->val);
+        if(head != NULL)
+        {
+            printf("deleteNode - Reset head val %d\n", head->val);
+        }
         #endif
     }
     else
@@ -179,7 +191,11 @@ boolean deleteNode(u16Node **prev_pp, u16Node **curr_pp)
     // delete node
     LISTLEN--;
     #ifdef U16LIST_DBG
-    printf("deleteNode - Deleting value %d, head value %d\n", delNode->val, head->val);
+    if(head != NULL)
+    {
+        printf("deleteNode - Deleting value %d, head value %d\n", delNode->val, head->val);
+    }
+
     #endif
     free(delNode);
     #ifdef U16LIST_DBG
@@ -247,6 +263,11 @@ void fixListLen()
     }
 }
 
+/****************************************************************/
+/*!
+@brief
+Prints list to console
+*/
 void printList()
 {
     #ifdef U16LIST_DBG
@@ -261,6 +282,14 @@ void printList()
     #endif
 }
 
+/****************************************************************/
+/*!
+@brief
+Prints list to file.
+
+@param fh
+Pointer to file handle.
+*/
 void printListToFile(FILE **fh)
 {
     u16Node *node = head;
@@ -269,7 +298,6 @@ void printListToFile(FILE **fh)
         fprintf(*fh, "%d\n", node->val);
         node = node->next;
     }
-    
 }
 
 

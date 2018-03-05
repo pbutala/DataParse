@@ -10,7 +10,7 @@ typedef unsigned short uint16;
 typedef int            int32;
 typedef unsigned int   uint32;
 
-#define TRUE (boolean)0
-#define FALSE (boolean)1
+#define TRUE (boolean)1
+#define FALSE (boolean)0
 
 #endif // TYPES_H

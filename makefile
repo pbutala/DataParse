@@ -1,6 +1,6 @@
 TARGET = dataparse.exe
 
-OBJS = u16List.o dataparse.o
+OBJS = u16CBuf.o u16List.o dataparse.o
 
 REBUILDABLES = $(OBJS) $(TARGET)
 
